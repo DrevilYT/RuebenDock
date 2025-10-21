@@ -1,5 +1,5 @@
 <p align="center"><a href="https://drev.uk.to/error"><img src="https://readme-typing-svg.demolab.com?font=Fira+Code&pause=500&color=10BB39&width=435&lines=DWAT+-+v5;The+fastest+Windows+activation+script;Now+improved+and+updated+with+cleaner+GUI" alt="drev.uk.to" /></a>
-<h1 align="center">RuebenDock — your browser in the cloudRuebenDock — your browser in the cloud</h1>
+<h1 align="center">RuebenDock — your browser in the cloud</h1>
 
 <p align="center">Each session runs in its own secure Docker container, giving you a private, isolated browsing environment every time. All servers are hosted by myself.</p>
 <hr>
