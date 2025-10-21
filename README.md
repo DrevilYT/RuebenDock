@@ -1,4 +1,4 @@
-<p align="center"><a href="https://drev.uk.to/error"><img src="https://readme-typing-svg.demolab.com/demo/?color=52C2BE&lines=RuebenDock" alt="drev.uk.to" /></a>
+<p align="center"><a href="https://drev.uk.to/error"><img src="[https://readme-typing-svg.demolab.com/demo/?color=52C2BE&lines=RuebenDock]" alt="drev.uk.to" /></a>
 <h1 align="center">RuebenDock — your browser in the cloud</h1>
 
 <p align="center">Each session runs in its own secure Docker container, giving you a private, isolated browsing environment every time. All servers are hosted by myself.</p>
