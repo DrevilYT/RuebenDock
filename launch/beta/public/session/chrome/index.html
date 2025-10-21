@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Launching Chrome...</title>
+<style>
+  /* Basic setup */
+  html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+  }
+
+  /* RGB animated background */
+  @keyframes rgbBackground {
+    0% { background-color: #ff0000; }
+    33% { background-color: #00ff00; }
+    66% { background-color: #0000ff; }
+    100% { background-color: #ff0000; }
+  }
+
+  body {
+    animation: rgbBackground 6s infinite linear;
+    transition: background-color 1s ease;
+  }
+
+  /* Rotating circle */
+  .circle {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.15);
+    border: 5px solid rgba(255, 255, 255, 0.6);
+    animation: spin 4s linear infinite;
+    box-shadow: 0 0 40px rgba(255, 255, 255, 0.3);
+  }
+
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  /* Browser logo */
+  .circle img {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+  }
+
+  /* Main loading text */
+  .text {
+    margin-top: 20px;
+    font-size: 1.5em;
+    letter-spacing: 1px;
+  }
+
+  /* Subtext (animated) */
+  .subtext {
+    margin-top: 6px;
+    font-size: 0.9em;
+    letter-spacing: 0.5px;
+    opacity: 0.7;
+    animation: fadePulse 3s ease-in-out infinite;
+  }
+
+  @keyframes fadePulse {
+    0% { opacity: 0.4; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.05); }
+    100% { opacity: 0.4; transform: scale(1); }
+  }
+</style>
+</head>
+<body>
+  <div class="circle">
+    <!-- Browser logo -->
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Google_Chrome_icon_%28February_2022%29.svg/768px-Google_Chrome_icon_%28February_2022%29.svg.png" alt="Browser Logo">
+  </div>
+
+  <div class="text">Launching Chrome...</div>
+  <div class="subtext">Drev / Rueben ©</div>
+  <div class="subtext">Servers are hosted by Rueben</div>
+
+  <script>
+    // Redirect after 5 seconds
+    setTimeout(() => {
+      window.location.href = "https://chrome.public1.session.browser.rueben.xyz"; // change target URL here
+    }, 5000);
+  </script>
+</body>
+</html>
