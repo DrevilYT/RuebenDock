@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Rueben Search</title>
+    <style>
+      :root {
+        --bg: #0f1724;
+        --card: #0b1220;
+        --accent: #52C2BE;
+        --muted: #9aa5b1;
+        --glass: rgba(255, 255, 255, 0.03);
+        --radius: 14px;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      }
+
+      * {
+        box-sizing: border-box
+      }
+
+      html,
+      body {
+        height: 100%
+      }
+
+      body {
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: radial-gradient(1200px 600px at 10% 10%, rgba(82, 194, 190, 0.08), transparent),
+          radial-gradient(1000px 500px at 90% 90%, rgba(82, 194, 190, 0.03), transparent),
+          var(--bg);
+        color: #e6eef3;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        padding: 32px;
+      }
+
+      .card {
+        width: min(920px, 96%);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+        border-radius: var(--radius);
+        padding: 28px;
+        box-shadow: 0 10px 30px rgba(2, 6, 23, 0.6);
+        backdrop-filter: blur(8px);
+        display: grid;
+        gap: 18px;
+        align-items: center;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: 20px;
+        letter-spacing: 0.2px
+      }
+
+      p.sub {
+        margin: 0;
+        color: var(--muted);
+        font-size: 13px
+      }
+
+      .search-row {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+
+      .search {
+        flex: 1;
+        display: flex;
+        background: var(--glass);
+        border-radius: 12px;
+        padding: 12px 14px;
+        align-items: center;
+        gap: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.03);
+      }
+
+      .logo {
+        width: 48px;
+        height: 48px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, rgba(82, 194, 190, 0.08), rgba(82, 194, 190, 0.02));
+        border: 1px solid rgba(82, 194, 190, 0.06);
+        flex-shrink: 0;
+      }
+
+      input[type="search"] {
+        background: transparent;
+        border: 0;
+        outline: 0;
+        color: inherit;
+        font-size: 16px;
+        width: 100%;
+      }
+
+      .btn {
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        padding: 10px 14px;
+        border-radius: 10px;
+        color: var(--muted);
+        cursor: pointer;
+      }
+
+      .btn.primary {
+        background: linear-gradient(90deg, var(--accent), #4dbbb1);
+        color: #042027;
+        border: 0;
+        font-weight: 600;
+        box-shadow: 0 6px 18px rgba(82, 194, 190, 0.12), inset 0 -1px rgba(255, 255, 255, 0.04);
+      }
+
+      /* modal */
+      .modal-backdrop {
+        position: fixed;
+        inset: 0;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(180deg, rgba(2, 6, 23, 0.45), rgba(2, 6, 23, 0.55));
+        z-index: 40;
+        padding: 24px;
+      }
+
+      .modal {
+        width: 100%;
+        max-width: 560px;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+        border-radius: 12px;
+        padding: 18px;
+        border: 1px solid rgba(255, 255, 255, 0.03);
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        box-shadow: 0 18px 50px rgba(2, 6, 23, 0.7);
+      }
+
+      .modal .title {
+        display: flex;
+        align-items: center;
+        gap: 12px
+      }
+
+      .engines {
+        display: flex;
+        gap: 10px;
+        justify-content: space-between
+      }
+
+      .engine {
+        flex: 1;
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        padding: 12px;
+        border-radius: 10px;
+        cursor: pointer;
+        border: 1px solid rgba(255, 255, 255, 0.03);
+        transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+        background: transparent;
+      }
+
+      .engine:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 30px rgba(2, 6, 23, 0.6)
+      }
+
+      .engine svg {
+        width: 28px;
+        height: 28px;
+        flex-shrink: 0
+      }
+
+      .engine .meta {
+        display: flex;
+        flex-direction: column
+      }
+
+      .engine .meta .name {
+        font-weight: 600
+      }
+
+      .engine .meta .desc {
+        font-size: 12px;
+        color: var(--muted)
+      }
+
+      .hint {
+        font-size: 13px;
+        color: var(--muted);
+        margin-top: 6px;
+        text-align: center
+      }
+
+      .close-x {
+        margin-left: auto;
+        background: transparent;
+        border: 0;
+        color: var(--muted);
+        font-size: 14px;
+        cursor: pointer
+      }
+
+      @media (max-width:560px) {
+        .engines {
+          flex-direction: column
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card" role="main" aria-labelledby="title">
+      <div style="display:flex;gap:14px;align-items:center;justify-content:space-between;">
+        <div>
+          <h1 id="title">Rueben Search</h1>
+          <p class="sub">Type something and press Enter — pick a search engine to open results.</p>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center"><button id="clearBtn" class="btn" title="Clear input">Clear</button><a class="btn primary" href="#" id="randomBtn" title="Try a random search">Surprise</a></div>
+      </div>
+      <div class="search-row">
+        <div class="search" role="search" aria-label="Search">
+          <div class="logo" aria-hidden="true">
+            <!-- tiny svg logo -->
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect x="1" y="1" width="22" height="22" rx="5" fill="none" stroke="rgba(82,194,190,0.5)" stroke-width="1.5" />
+              <path d="M6 14c2-4 8-4 10 0" stroke="rgba(82,194,190,0.92)" stroke-width="1.6" stroke-linecap="round" />
+            </svg>undefined
+          </div>undefined<input id="q" type="search" placeholder="Search anything — e.g. 'best pasta recipes' " aria-label="Search query" autocomplete="off" />undefined
+        </div>undefined<button id="goBtn" class="btn primary" title="Choose search engine (or press Enter)">Search</button>undefined
+      </div>undefined<p class="hint">Tip: press Enter after typing. Press Esc to close the engine selector.</p>undefined
+    </div>undefined
+    <!-- Modal -->undefined<div id="backdrop" class="modal-backdrop" role="dialog" aria-modal="true" aria-hidden="true">undefined<div class="modal" role="document" aria-labelledby="modalTitle">undefined<div class="title">undefined<div style="display:flex;flex-direction:column;">
+            <strong id="modalTitle">Open search with...</strong>
+            <small id="modalQuery" style="color:var(--muted);font-size:13px;"></small>undefined
+          </div>undefined<button class="close-x" id="closeModal" aria-label="Close selector">✕</button>undefined</div>undefined<div class="engines" role="list">undefined<div class="engine" data-engine="google" role="listitem" tabindex="0" aria-label="Search with Google">
+            <!-- Google icon -->
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path fill="#EA4335" d="M12 11.5v3.2h4.3c-.2 1.1-1.1 2.8-4.3 2.8A7 7 0 1 1 12 4.5c1.8 0 3 .7 3.7 1.3l2.5-2.4C17.2 2.1 14.9 1 12 1 6.5 1 2 5.5 2 11s4.5 10 10 10 9.9-4.5 9.9-10c0-.7-.1-1.3-.2-1.5H12z" />
+            </svg>
+            <div class="meta">
+              <span class="name">Google</span>
+              <span class="desc">The classic — fast, broad results</span>
+            </div>undefined
+          </div>undefined<div class="engine" data-engine="bing" role="listitem" tabindex="0" aria-label="Search with Bing">
+            <!-- Bing icon -->
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path fill="#008373" d="M3 3v18h18V3H3zm10.4 12.2L9 9.7 6.3 15h6.1l.9.2z" />
+            </svg>
+            <div class="meta">
+              <span class="name">Bing</span>
+              <span class="desc">Microsoft search with visuals</span>
+            </div>undefined
+          </div>undefined<div class="engine" data-engine="ddg" role="listitem" tabindex="0" aria-label="Search with DuckDuckGo">
+            <!-- DuckDuckGo icon (stylized) -->
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <circle cx="12" cy="12" r="10" fill="#DE5833" />
+              <path d="M9.6 14.2c.8 1.1 2.4 1.1 3.2 0 .7-1 1.9-3.4 1.9-3.4S14.6 8 12 8s-2.7 2.8-2.7 2.8 1.1 2.4 0 3.4z" fill="#fff" />
+            </svg>
+            <div class="meta">
+              <span class="name">DuckDuckGo</span>
+              <span class="desc">Privacy-first search</span>
+            </div>undefined
+          </div>undefined</div>undefined<div style="display:flex;gap:8px;justify-content:flex-end;margin-top:6px;">undefined<button id="cancelBtn" class="btn" aria-label="Cancel and close">Cancel</button>undefined</div>undefined</div>undefined</div>undefined<script>
+      (function() {
+        const input = document.getElementById('q');
+        const goBtn = document.getElementById('goBtn');
+        const backdrop = document.getElementById('backdrop');
+        const modalQuery = document.getElementById('modalQuery');
+        const closeModal = document.getElementById('closeModal');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const randomBtn = document.getElementById('randomBtn');
+        const engines = {
+          google: q => `https://www.google.com/search?q=${encodeURIComponent(q)}`,
+          bing: q => `https://www.bing.com/search?q=${encodeURIComponent(q)}`,
+          ddg: q => `https://duckduckgo.com/?q=${encodeURIComponent(q)}`
+        };
+        // open modal, set text
+        function openEngineSelector(query) {
+          if (!query || !query.trim()) return;
+          modalQuery.textContent = '"' + query + '"';
+          backdrop.style.display = 'flex';
+          backdrop.setAttribute('aria-hidden', 'false');
+          // trap focus: focus first engine
+          setTimeout(() => {
+            const first = backdrop.querySelector('.engine');
+            first && first.focus();
+          }, 30);
+        }
+
+        function closeEngineSelector() {
+          backdrop.style.display = 'none';
+          backdrop.setAttribute('aria-hidden', 'true');
+          input.focus();
+        }
+        // handle selection
+        function onSelectEngine(engineId) {
+          const q = input.value.trim();
+          if (!q) return closeEngineSelector();
+          const url = engines[engineId](q);
+          // open in new tab safely
+          window.open(url, '_blank', 'noopener,noreferrer');
+          closeEngineSelector();
+        }
+        // key handlers
+        input.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            openEngineSelector(this.value.trim());
+          }
+        });
+        goBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          openEngineSelector(input.value.trim());
+        });
+        // engine click
+        document.querySelectorAll('.engine').forEach(el => {
+          el.addEventListener('click', () => onSelectEngine(el.dataset.engine));
+          el.addEventListener('keydown', (ev) => {
+            if (ev.key === 'Enter' || ev.key === ' ') {
+              ev.preventDefault();
+              onSelectEngine(el.dataset.engine);
+            }
+          });
+        });
+        // close modal handlers
+        closeModal.addEventListener('click', closeEngineSelector);
+        cancelBtn.addEventListener('click', closeEngineSelector);
+        // click outside modal to close
+        backdrop.addEventListener('click', (ev) => {
+          if (ev.target === backdrop) closeEngineSelector();
+        });
+        // esc to close
+        window.addEventListener('keydown', (ev) => {
+          if (ev.key === 'Escape') closeEngineSelector();
+        });
+        // clear and random
+        clearBtn.addEventListener('click', () => {
+          input.value = '';
+          input.focus();
+        });
+        randomBtn.addEventListener('click', (ev) => {
+          ev.preventDefault();
+          const samples = ['best ramen in the world', 'how to dockerize a chrome browser', 'clean minimal UI inspiration', 'site:github.com drev', 'learn javascript promises'];
+          const s = samples[Math.floor(Math.random() * samples.length)];
+          input.value = s;
+          openEngineSelector(s);
+        });
+        // small accessibility: focus on input on load
+        window.addEventListener('load', () => input.focus());
+      })();
+    </script>undefined
+  </body>undefined
+</html>
