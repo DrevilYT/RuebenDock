@@ -13,7 +13,7 @@
 -  A domain or subdomain (e.g. browser.rueben.xyz)
 -  Optional: Nginx, Caddy, or Cloudflare Tunnel for HTTPS and routing
 
-### Method 1 - Using Portainer (Recommended)
+### Method 1 - Using Portainer/Dockedge (Recommended)
 
 -   Install Portainer.
 -   Open Portainer at https://your-ip:9443 and complete the setup wizard.
@@ -23,11 +23,20 @@
     Ports: 3000 → 3000
     Restart policy: Always
     ```
--   You will see the activation options. Select your option.
+-   Deploy the container, then open http://your-server-ip:3000 in your browser.
 
-### Method 2 - Windows Run Installer (Discontinued)
--   Discontinued (new versions will no longer receive the run installer method as of v5).
--   [Click here for the older versions code](https://github.com/DrevilYT/ActivationScript/tree/main/installer/readme.md)
+### Method 2 - Manual via Docker Compose
+-   Create a new folder and a file called docker-compose.yml:
+    ```
+    version: "3"
+    services:
+      chrome:
+        image: ksm-chrome:latest
+        restart: always
+        ports:
+          - "3000:3000"
+        shm_size: 2gb
+    ```
 
 </br>
 
