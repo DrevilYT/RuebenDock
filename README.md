@@ -19,7 +19,7 @@
 -   Open Portainer at https://your-ip:9443 and complete the setup wizard.
 -   Go to Containers → Add Container, and enter:
     ```
-    Image: ksm-chrome:latest or another browser image (e.g. browserless/chrome)
+    Image: kasmweb/chrome or another browser image (e.g. browserless/chrome)
     Ports: 3000 → 3000
     Restart policy: Always
     ```
