@@ -6,7 +6,7 @@
 
 ## ⚙️ How to Set It Up Yourself?
 
-## Prerequisites
+### Prerequisites
 
 -  A Debian based Linux server (Ubuntu or Debian) with Docker and Docker Compose installed
 -  4 GB RAM and 10 GB storage minimum
