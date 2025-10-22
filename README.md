@@ -37,6 +37,14 @@
           - "3000:3000"
         shm_size: 2gb
     ```
+- Start it:
+  ```
+  docker compose up -d
+  ```
+- Visit:
+  ```
+  http://your-server-ip:3000
+  ```
 
 </br>
 
