@@ -18,12 +18,11 @@
 -   Install Portainer.
 -   Open Portainer at https://your-ip:9443 and complete the setup wizard.
 -   Go to Containers → Add Container, and enter:
-
-Image: ksm-chrome:latest or another browser image (e.g. browserless/chrome)
-
-Ports: 3000 → 3000
-
-Restart policy: Always
+    ```
+    Image: ksm-chrome:latest or another browser image (e.g. browserless/chrome)
+    Ports: 3000 → 3000
+    Restart policy: Always
+    ```
 -   You will see the activation options. Select your option.
 
 ### Method 2 - Windows Run Installer (Discontinued)
